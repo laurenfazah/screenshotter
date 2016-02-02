@@ -1,0 +1,148 @@
+/*//////////////////////////////////////
+//  imports
+//////////////////////////////////////*/
+
+@import "compass/reset";
+@import "compass/css3";
+@import "bourbon/bourbon";
+@import "neat/neat";
+
+/*//////////////////////////////////////
+//  colors
+//////////////////////////////////////*/
+
+$facebook: #3c5290;
+$twitter:#469aea;
+$instagram: #1b3f67;
+$linkedin: #3574af;
+
+$light:#fff;
+$dark: #333;
+$primary: #00B2EA;
+
+/*//////////////////////////////////////
+//  fonts
+//////////////////////////////////////*/
+$font-sans: $helvetica;
+$font-serif: 'Crimson Sans', $georgia;
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:700;
+}
+
+/*//////////////////////////////////////
+//  extension on skeleton
+//////////////////////////////////////*/
+$grid-columns: 12;
+$width:1200px;
+$max-width:1200px;
+$font-size:10;
+$paragraph-size:1.6;
+
+*{
+    @include box-sizing(border-box);
+}
+
+.block{
+    @extend %block;
+    @include clearfix;
+}
+
+.disable-hover{
+    pointer-events:none;
+}
+
+b,strong{
+    font-weight:700;
+}
+
+i,em{
+    font-style:italic;
+}
+
+input:focus, textarea:focus,button,input[type="submit"]{
+    outline:none;
+}
+
+button,input[type="submit"]{
+    cursor:pointer;
+}
+
+/*//////////////////////////////////////
+//  mixins
+//////////////////////////////////////*/
+
+@mixin input-placeholder {
+    &:-moz-placeholder { @content; }
+    &::-moz-placeholder { @content; }
+    &:-ms-input-placeholder { @content; }
+    &::-webkit-input-placeholder { @content; } 
+}
+
+
+/*//////////////////////////////////////
+//  silent classes
+//////////////////////////////////////*/
+
+%block{
+    max-width:$width;
+    width:100%;
+    margin:0 auto;
+    display:block;
+}
+
+%marpad{
+    padding:0;
+    margin:0;
+}
+
+%cover{
+    background-size: cover;
+    -ms-behavior: url(/js/vendor/backgroundsize.min.htc);
+}
+
+%default-transition{
+    @include transition(all .3s ease-in-out);
+}
+
+%middle{
+    @include position(relative, 50% auto auto auto);
+    @include transform(translateY(-50%));
+}
+
+%absolute-middle{
+    @include position(absolute, 50% auto auto 50%);
+    @include transform(translateY(-50%) translateX(-50%));
+}
+
+%hide-text{
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+%opacity0{
+    @include opacity(0);
+}
+
+%opacity1{
+    @include opacity(1);
+}
+
+%psuedo-content{
+    content:" ";
+    display:block;
+}
+
+
+body,html{
+    display:block;
+    height:100%;
+}
+
+body{
+    font-size:62.5%;
+    position:relative;
+    font-family:$helvetica;
+}
+
