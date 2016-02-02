@@ -76,7 +76,7 @@ button,input[type="submit"]{
     &:-moz-placeholder { @content; }
     &::-moz-placeholder { @content; }
     &:-ms-input-placeholder { @content; }
-    &::-webkit-input-placeholder { @content; } 
+    &::-webkit-input-placeholder { @content; }
 }
 
 
@@ -141,7 +141,7 @@ body,html{
 }
 
 body{
-    font-size:62.5%;
+    font-size:100%;
     position:relative;
     font-family:$helvetica;
 }
