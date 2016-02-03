@@ -10,6 +10,7 @@ use View;
 use Input;
 use Validator;
 use Redirect;
+use File;
 use Session;
 
 class ScreenshotsController extends Controller
@@ -17,17 +18,27 @@ class ScreenshotsController extends Controller
     public function grabShots()
     {
 
-        $url = $_POST["url"];
+        //*/////////////////////////////////////////////////
+        // create new folder based on user input
+        //*/////////////////////////////////////////////////
 
-        print $url;
-        print "<pre>";
-        print_r($_SERVER);
-        print "</pre>";
-        die();
+        $url = $_POST["url"];                                   // user input
+        $uploadPath = base_path() . '/public/uploads/';         // path to uploads folder on server
+        $parsedUrl = parse_url($url);                           // parsing user input
+        $domain = $parsedUrl["host"];                           // grabbing just domain from user input
+        $newDir = $uploadPath . $domain . '_' . date('Y-m-d'.'-'.'H:i:s');  // new unique folder name
 
-        // $_SERVER['HOMEDRIVE'] and $_SERVER['HOMEPATH’] //windows
+        File::makeDirectory($newDir);
 
-        // mkdir($folderPath . date("Y-m-d H:i:s"), 0700);
+
+
+
+        //*/////////////////////////////////////////////////
+        // return user back to homepage
+        //*/////////////////////////////////////////////////
+
+        return redirect()->back();
+
     }
 }
 ?>

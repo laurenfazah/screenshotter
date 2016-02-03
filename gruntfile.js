@@ -11,7 +11,7 @@ module.exports = function(grunt) {
             mangle: false
           },
           files: {
-            "html/js/main.js": "build/js/main.js"
+            "public/js/main.js": "public/build/js/main.js"
           },
         },
         prod: {
@@ -23,7 +23,7 @@ module.exports = function(grunt) {
             }
           },
           files: {
-            "html/js/main.js": "build/js/main.js"
+            "public/js/main.js": "public/build/js/main.js"
           },
         },
       },
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
       htmlmin: {                                     // Task
         dev: {                                       // Another target
           files: {
-            'html/index.html': 'build/index.html',
+            'public/index.html': 'public/build/index.html',
           },
         },
         prod: {                                      // Target
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
             collapseWhitespace: true
           },
           files: {                                   // Dictionary of files
-            'html/index.hml': 'build/index.html',
+            'public/index.hml': 'public/build/index.html',
           },
         },
       },
@@ -54,15 +54,15 @@ module.exports = function(grunt) {
           },
           files: [{
             expand: true,                  // Enable dynamic expansion
-            cwd: 'build/img',                   // Src matches are relative to this path
+            cwd: 'public/build/img',                   // Src matches are relative to this path
             src: ['**/*.{png,jpg,gif}'],   // Actual patterns to match
-            dest: 'html/img/'                  // Destination path prefix
+            dest: 'public/img/'                  // Destination path prefix
           }]
         }
       },
 
       jshint: {
-        files: ['build/js/*.js'],
+        files: ['public/build/js/*.js'],
         options: {
           curly: true,
           eqeqeq: true,
@@ -83,9 +83,9 @@ module.exports = function(grunt) {
         dev: {                     // Target
             files: [{               // Dictionary of files
                 expand: true,       // Enable dynamic expansion.
-                cwd: 'build/img',     // Src matches are relative to this path.
+                cwd: 'public/build/img',     // Src matches are relative to this path.
                 src: ['**/*.svg'],  // Actual pattern(s) to match.
-                dest: 'html/img/',       // Destination path prefix.
+                dest: 'public/img/',       // Destination path prefix.
                 ext: '.svg'     // Dest filepaths will have this extension.
                 // ie: optimise img/src/branding/logo.svg and store it in img/branding/logo.min.svg
             }]
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
             banner: '/* updated <%= grunt.template.today("yyyy-mm-dd") %> */'
           },
           files: {
-            'html/stylesheets/screen.css': ['stylesheets/*.css']
+            'public/stylesheets/screen.css': ['stylesheets/*.css']
           }
         }
       },
@@ -118,18 +118,18 @@ module.exports = function(grunt) {
                 relaxerror: ["Bad value X-UA-Compatible for attribute http-equiv on element meta."]
         },
         files: {
-                src: ['html/**/*.html','! node_modules/**/*.html']
+                src: ['public/**/*.html','! node_modules/**/*.html']
         }
       },
 
-      copy: { 
+      copy: {
         main:{
           files:[
             {
               expand: true,
               flatten: true,
-              src: ['build/js/**'], 
-              dest: 'html/js/',
+              src: ['public/build/js/**'],
+              dest: 'public/js/',
               filter:'isFile'},
           ],
         },
@@ -140,26 +140,26 @@ module.exports = function(grunt) {
           livereload: true,
         },
         html:{
-          files: ['html/**/*.html','craft/**/*.html'],
+          files: ['public/**/*.html','craft/**/*.html'],
           tasks: ['build'],
         },
         js:{
-          files: ['build/**/*.js'],
+          files: ['public/build/**/*.js'],
           tasks: ['jshint','copy'],
         },
         sass:{
           options:{
             livereload: false,
           },
-          files: ['build/sass/**/*.scss'],
+          files: ['public/build/sass/**/*.scss'],
           tasks: ['compass'],
         },
         img:{
-          files: ['build/img/**/*.img'],
+          files: ['public/build/img/**/*.img'],
           tasks: ['images'],
         },
         css:{
-          files: ['html/stylesheets/**/*.css'],
+          files: ['public/stylesheets/**/*.css'],
           tasks:[],
         }
       }
