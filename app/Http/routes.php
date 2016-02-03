@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('pages/main');
 });
 
-
+Route::post('grabShots', 'ScreenshotsController@grabShots');
 
 /*
 |--------------------------------------------------------------------------
