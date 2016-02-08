@@ -9,3 +9,7 @@
 4. Script opens each internal page and saves a screenshot of each to said folder
 5. Folder's contents are zipped up
 6. Users are prompted to download zipfile
+
+### Libraries in use:
+* [PHPCrawl](http://phpcrawl.cuab.de/) for sitemapping
+* [GrabzIt](http://grabz.it/) for screenshotting
