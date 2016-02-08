@@ -5,11 +5,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-// use App\CustomClasses\Sitemap;
-// use App\CustomClasses\Spider;
-// use App\CustomClasses\RecursiveCrawler;
+use App\CustomClasses\PHPCrawl\libs\PHPCrawler;
+use App\CustomClasses\PHPCrawl\libs\MyCrawler;
 use App\CustomClasses\GrabzItClient;
-use App\CustomClasses\Crawler\WebCrawler as WebCrawler;
 use Response;
 use View;
 use Input;
@@ -36,28 +34,60 @@ class ScreenshotsController extends Controller
 
         $sitemap->createSitemapIndex($site, 'Today');
 
-        print "<pre>";
-        print($dir);
-        print "</pre>";
-        die();
+        // print "<pre>";
+        // print($dir);
+        // print "</pre>";
+        // die();
     }
 
     public function crawlSite($site, $filepath)
     {
-        // set_time_limit(3000);
-        // $allLinks = array();
-        // $crawler = WebCrawler::getInstance();
-        // //Crawler for aplopio
-        // $crawler->beginCrawl($site);
-        // $aplopio = $crawler->getWebPages();
-        // foreach ($aplopio as $url => $properties) {
-        //     array_push($allLinks, $url);
-        // }
 
-        // print "<pre>";
-        // print_r($allLinks);
-        // print "</pre>";
-        // die();
+        // $spiderScript = "wget --spider -r http://www.laurenfazah.com 2>&1 | grep '^--' | awk '{ print $3 }' | grep -v '\.\(css\|js\|png\|gif\|jpg\|JPG\)$' > /Users/lauren.fazah/Desktop/testshots/test/urls.txt";
+
+
+        $crawler = new PHPCrawler();
+
+        // URL to crawl
+        $crawler->setURL($site);
+
+        // $crawler->setWorkingDirectory($filepath);
+
+        // Only receive content of files with content-type "text/html"
+        $crawler->addContentTypeReceiveRule("#text/html#");
+
+        // Ignore links to pictures, dont even request pictures
+        $crawler->addURLFilterRule("#\.(jpg|jpeg|gif|png)$# i");
+
+        // Store and send cookie-data like a browser does
+        $crawler->enableCookieHandling(true);
+
+        // Set the traffic-limit to 1 MB (in bytes,
+        // for testing we dont want to "suck" the whole site)
+        // $crawler->setTrafficLimit(5242880);
+        // $crawler->setTrafficLimit(1000 * 1024);
+
+        // Thats enough, now here we go
+        $crawler->go();
+
+        // At the end, after the process is finished, we print a short
+        // report (see method getProcessReport() for more information)
+        $report = $crawler->getProcessReport();
+
+        if (PHP_SAPI == "cli") $lb = "\n";
+        else $lb = "<br />";
+
+        echo "Summary:".$lb;
+        echo "Links followed: ".$report->links_followed.$lb;
+        echo "Documents received: ".$report->files_received.$lb;
+        echo "Bytes received: ".$report->bytes_received." bytes".$lb;
+        echo "Process runtime: ".$report->process_runtime." sec".$lb;
+
+
+        print "<pre>";
+        print_r ($report);
+        print "</pre>";
+        die();
 
     }
 
@@ -67,6 +97,7 @@ class ScreenshotsController extends Controller
         // To take a image screenshot
         $grabzIt->SetImageOptions($site);
         $grabzIt->SaveTo($filepath);
+
     }
 
     public function grabShots()
@@ -90,7 +121,7 @@ class ScreenshotsController extends Controller
         // crawl site for all possible links
         //*/////////////////////////////////////////////////
 
-        // $this->crawlSite($userURL, $filepath);
+        $this->crawlSite($userURL, $filepath);
 
         // $this->createXMLSitemap($userURL, $newDir);  // to create xml file
 
@@ -105,7 +136,7 @@ class ScreenshotsController extends Controller
         // take screenshots of site
         //*/////////////////////////////////////////////////
 
-        $this->takeScreenshots($userURL, $filepath);
+        // $this->takeScreenshots($userURL, $filepath);
 
 
         //*/////////////////////////////////////////////////
