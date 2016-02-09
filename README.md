@@ -12,4 +12,4 @@
 
 ### Libraries in use:
 * [PHPCrawl](http://phpcrawl.cuab.de/) for sitemapping
-* [GrabzIt](http://grabz.it/) for screenshotting
+* [PHP-PhantomJS](http://jonnnnyw.github.io/php-phantomjs/4.0/) for screenshotting

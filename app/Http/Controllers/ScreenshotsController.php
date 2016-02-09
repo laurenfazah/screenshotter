@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\CustomClasses\PHPCrawl\libs\PHPCrawler;
 use App\CustomClasses\PHPCrawl\libs\MyCrawler;
 use App\CustomClasses\GrabzItClient;
+use JonnyW\PhantomJs\Client;
 use Response;
 use View;
 use Input;
@@ -40,6 +41,40 @@ class ScreenshotsController extends Controller
         // die();
     }
 
+    public function takeScreenshots($site, $filepath)
+    {
+        // print "<pre>";
+        // print_r(base_path());
+        // print "</pre>";
+
+        // die();
+        $client = Client::getInstance();
+
+        $client->getEngine()->setPath(base_path().'/bin/phantomjs');
+
+        $width  = 1600;
+        $height = 5000;
+        $top    = 0;
+        $left   = 0;
+
+        /**
+         * @see JonnyW\PhantomJs\Message\CaptureRequest
+         **/
+        $request = $client->getMessageFactory()->createCaptureRequest($site, 'GET');
+        $request->setOutputFile($filepath);
+        $request->setViewportSize($width, $height);
+        $request->setCaptureDimensions($width, $height, $top, $left);
+
+        /**
+         * @see JonnyW\PhantomJs\Message\Response
+         **/
+        $response = $client->getMessageFactory()->createResponse();
+
+        // Send the request
+        $client->send($request, $response);
+
+    }
+
     public function crawlSite($site, $filepath)
     {
 
@@ -64,7 +99,6 @@ class ScreenshotsController extends Controller
 
         // Set the traffic-limit to 1 MB (in bytes,
         // for testing we dont want to "suck" the whole site)
-        // $crawler->setTrafficLimit(5242880);
         // $crawler->setTrafficLimit(1000 * 1024);
 
         // Thats enough, now here we go
@@ -83,20 +117,7 @@ class ScreenshotsController extends Controller
         echo "Bytes received: ".$report->bytes_received." bytes".$lb;
         echo "Process runtime: ".$report->process_runtime." sec".$lb;
 
-
-        print "<pre>";
-        print_r ($report);
-        print "</pre>";
-        die();
-
-    }
-
-    public function takeScreenshots($site, $filepath)
-    {
-        $grabzIt = new GrabzItClient("MTRmOTdkZDJmNWYyNDU2MmI4NDBkYzYzYTIxODdhNzg=", "M1c/Pz9sPz9VJT8/XBY/Jn0dPysAPz8/PxpBRWwpNX8=");
-        // To take a image screenshot
-        $grabzIt->SetImageOptions($site);
-        $grabzIt->SaveTo($filepath);
+        $this->takeScreenshots($data, $filepath);
 
     }
 
@@ -112,7 +133,7 @@ class ScreenshotsController extends Controller
         $parsedUrl = parse_url($userURL);                       // parsing user input
         $domain = $parsedUrl["host"];                           // grabbing just domain from user input
         $newDir = $uploadPath . $domain . '_' . date('Y-m-d'.'-'.'H:i:s') . '/';  // new unique folder name
-        $filepath = $uploadPath . $domain . '_' . date('Y-m-d'.'-'.'H:i:s') . '/'. $domain . '.png';  // new unique file name
+        $filepath = $uploadPath . $domain . '_' . date('Y-m-d'.'-'.'H:i:s') . '/'. $domain . '.jpg';  // new unique file name
 
         File::makeDirectory($newDir, 0777);                     // make new directory for screenshots
 
@@ -121,23 +142,14 @@ class ScreenshotsController extends Controller
         // crawl site for all possible links
         //*/////////////////////////////////////////////////
 
-        $this->crawlSite($userURL, $filepath);
-
-        // $this->createXMLSitemap($userURL, $newDir);  // to create xml file
-
-        // print "<pre>";
-        // print($newDir);
-        // print "</pre>";
-        // die();
-
+        // $this->crawlSite($userURL, $filepath);
 
 
         //*/////////////////////////////////////////////////
         // take screenshots of site
         //*/////////////////////////////////////////////////
 
-        // $this->takeScreenshots($userURL, $filepath);
-
+        $this->takeScreenshots($userURL, $filepath);
 
         //*/////////////////////////////////////////////////
         // return user back to homepage
