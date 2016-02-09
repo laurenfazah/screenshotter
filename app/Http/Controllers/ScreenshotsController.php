@@ -7,7 +7,6 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\CustomClasses\PHPCrawl\libs\PHPCrawler;
 use App\CustomClasses\PHPCrawl\libs\MyCrawler;
-use App\CustomClasses\GrabzItClient;
 use JonnyW\PhantomJs\Client;
 use Response;
 use View;
@@ -21,30 +20,9 @@ use DOMDocument;
 class ScreenshotsController extends Controller
 {
 
-    public function createXMLSitemap($site, $dir)
-    {
-        $sitemap = new Sitemap($site);
-
-        $sitemap->setPath($dir);                            // path to save xml files
-
-        // add sitemap urls to xml file
-        // $sitemap->addItem('/', '1.0', 'daily', 'Today');
-        // $sitemap->addItem('/about', '0.8', 'monthly', 'Jun 25');
-        // $sitemap->addItem('/contact', '0.6', 'yearly', '14-12-2009');
-        // $sitemap->addItem('/otherpage');
-
-        $sitemap->createSitemapIndex($site, 'Today');
-
-        // print "<pre>";
-        // print($dir);
-        // print "</pre>";
-        // die();
-    }
-
     public function takeScreenshots($site, $filepath, $dimensions)
     {
 
-        // die();
         $client = Client::getInstance();
 
         $client->getEngine()->setPath(base_path().'/bin/phantomjs');
@@ -119,14 +97,18 @@ class ScreenshotsController extends Controller
     {
 
         //*/////////////////////////////////////////////////
-        // create new folder based on user input
+        // gather user input
         //*/////////////////////////////////////////////////
 
         $dimensions = array();
         $dimensions["height"] = $_POST["height"];
         $dimensions["width"] = $_POST["width"];
+        $userURL = $_POST["url"];
 
-        $userURL = $_POST["url"];                               // user input
+        //*/////////////////////////////////////////////////
+        // create new folder based on user input
+        //*/////////////////////////////////////////////////
+
         $uploadPath = base_path() . '/public/uploads/';         // path to uploads folder on server
         $parsedUrl = parse_url($userURL);                       // parsing user input
         $domain = $parsedUrl["host"];                           // grabbing just domain from user input
