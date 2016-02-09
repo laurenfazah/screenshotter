@@ -41,19 +41,16 @@ class ScreenshotsController extends Controller
         // die();
     }
 
-    public function takeScreenshots($site, $filepath)
+    public function takeScreenshots($site, $filepath, $dimensions)
     {
-        // print "<pre>";
-        // print_r(base_path());
-        // print "</pre>";
 
         // die();
         $client = Client::getInstance();
 
         $client->getEngine()->setPath(base_path().'/bin/phantomjs');
 
-        $width  = 1600;
-        $height = 5000;
+        $width  = $dimensions["width"];
+        $height = $dimensions["height"];
         $top    = 0;
         $left   = 0;
 
@@ -77,9 +74,6 @@ class ScreenshotsController extends Controller
 
     public function crawlSite($site, $filepath)
     {
-
-        // $spiderScript = "wget --spider -r http://www.laurenfazah.com 2>&1 | grep '^--' | awk '{ print $3 }' | grep -v '\.\(css\|js\|png\|gif\|jpg\|JPG\)$' > /Users/lauren.fazah/Desktop/testshots/test/urls.txt";
-
 
         $crawler = new PHPCrawler();
 
@@ -128,6 +122,10 @@ class ScreenshotsController extends Controller
         // create new folder based on user input
         //*/////////////////////////////////////////////////
 
+        $dimensions = array();
+        $dimensions["height"] = $_POST["height"];
+        $dimensions["width"] = $_POST["width"];
+
         $userURL = $_POST["url"];                               // user input
         $uploadPath = base_path() . '/public/uploads/';         // path to uploads folder on server
         $parsedUrl = parse_url($userURL);                       // parsing user input
@@ -142,14 +140,14 @@ class ScreenshotsController extends Controller
         // crawl site for all possible links
         //*/////////////////////////////////////////////////
 
-        // $this->crawlSite($userURL, $filepath);
+        // $this->crawlSite($userURL, $filepath, $dimensions);
 
 
         //*/////////////////////////////////////////////////
         // take screenshots of site
         //*/////////////////////////////////////////////////
 
-        $this->takeScreenshots($userURL, $filepath);
+        $this->takeScreenshots($userURL, $filepath, $dimensions);
 
         //*/////////////////////////////////////////////////
         // return user back to homepage
