@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\CustomClasses\PHPCrawl\libs\PHPCrawler;
-use App\CustomClasses\PHPCrawl\libs\MyCrawler;
+use App\CustomClasses\PHPCrawl\libs\PHPCrawlerDocumentInfo;
 use JonnyW\PhantomJs\Client;
 use Response;
 use View;
@@ -20,44 +20,48 @@ use DOMDocument;
 class ScreenshotsController extends Controller
 {
 
-    public function takeScreenshots($site, $filepath, $dimensions)
+    public function takeScreenshots($site, $newDir, $dimensions)
     {
+        if ($site["status_code"] === 200) {
 
-        $client = Client::getInstance();
+            $url = $site["url"];
+            $filepath = $newDir . $url . ".jpg";
 
-        $client->getEngine()->setPath(base_path().'/bin/phantomjs');
+            $client = Client::getInstance();
 
-        $width  = $dimensions["width"];
-        $height = $dimensions["height"];
-        $top    = 0;
-        $left   = 0;
+            $client->getEngine()->setPath(base_path().'/bin/phantomjs');
 
-        /**
-         * @see JonnyW\PhantomJs\Message\CaptureRequest
-         **/
-        $request = $client->getMessageFactory()->createCaptureRequest($site, 'GET');
-        $request->setOutputFile($filepath);
-        $request->setViewportSize($width, $height);
-        $request->setCaptureDimensions($width, $height, $top, $left);
+            $width  = $dimensions["width"];
+            $height = $dimensions["height"];
+            $top    = 0;
+            $left   = 0;
 
-        /**
-         * @see JonnyW\PhantomJs\Message\Response
-         **/
-        $response = $client->getMessageFactory()->createResponse();
+            /**
+             * @see JonnyW\PhantomJs\Message\CaptureRequest
+             **/
+            $request = $client->getMessageFactory()->createCaptureRequest($url, 'GET');
+            $request->setOutputFile($filepath);
+            $request->setViewportSize($width, $height);
+            $request->setCaptureDimensions($width, $height, $top, $left);
 
-        // Send the request
-        $client->send($request, $response);
+            /**
+             * @see JonnyW\PhantomJs\Message\Response
+             **/
+            $response = $client->getMessageFactory()->createResponse();
 
+            // Send the request
+            $client->send($request, $response);
+
+        }
     }
 
-    public function crawlSite($site, $filepath)
+    public function crawlSite($site, $newDir, $dimensions)
     {
 
-        $crawler = new PHPCrawler();                                // set new instance
+        $crawler = new PHPCrawler();                                // set new class instances
+        $crawlerInfo = new PHPCrawlerDocumentInfo();
 
         $crawler->setURL($site);                                    // URL to crawl
-
-        // $crawler->setWorkingDirectory($filepath);                   // optional change from CD
 
         $crawler->addContentTypeReceiveRule("#text/html#");         // only receive content-type "text/html"
 
@@ -65,22 +69,20 @@ class ScreenshotsController extends Controller
 
         $crawler->enableCookieHandling(true);                       // store and send cookie-data like a browser does
 
-        // $crawler->setTrafficLimit(1000 * 1024);                  // limiting traffic (for dev)
+        $crawler->setTrafficLimit(1000 * 1024);                     // limiting traffic (for dev)
 
         $crawler->go();                                             // all info in, good to go
 
-        $report = $crawler->getProcessReport();                     // optional report
+        $siteLinks = $crawler->all_links_found;
 
-        if (PHP_SAPI == "cli") $lb = "\n";
-        else $lb = "<br />";
+        //*/////////////////////////////////////////////////
+        // take screenshots of site
+        //*/////////////////////////////////////////////////
 
-        echo "Summary:".$lb;
-        echo "Links followed: ".$report->links_followed.$lb;
-        echo "Documents received: ".$report->files_received.$lb;
-        echo "Bytes received: ".$report->bytes_received." bytes".$lb;
-        echo "Process runtime: ".$report->process_runtime." sec".$lb;
+        foreach ($siteLinks as $link) {
+            $this->takeScreenshots($link, $newDir, $dimensions);  // follow through to take screenshots
+        }
 
-        $this->takeScreenshots($data, $filepath);                   // follow through to take screenshots
 
     }
 
@@ -104,7 +106,6 @@ class ScreenshotsController extends Controller
         $parsedUrl = parse_url($userURL);                       // parsing user input
         $domain = $parsedUrl["host"];                           // grabbing just domain from user input
         $newDir = $uploadPath . $domain . '_' . date('Y-m-d'.'-'.'H:i:s') . '/';  // new unique folder name
-        $filepath = $uploadPath . $domain . '_' . date('Y-m-d'.'-'.'H:i:s') . '/'. $domain . '.jpg';  // new unique file name
 
         File::makeDirectory($newDir, 0777);                     // make new directory for screenshots
 
@@ -113,14 +114,8 @@ class ScreenshotsController extends Controller
         // crawl site for all possible links
         //*/////////////////////////////////////////////////
 
-        // $this->crawlSite($userURL, $filepath, $dimensions);
+        $this->crawlSite($userURL, $newDir, $dimensions);
 
-
-        //*/////////////////////////////////////////////////
-        // take screenshots of site
-        //*/////////////////////////////////////////////////
-
-        $this->takeScreenshots($userURL, $filepath, $dimensions);
 
         //*/////////////////////////////////////////////////
         // return user back to homepage

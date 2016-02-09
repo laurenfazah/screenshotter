@@ -33,6 +33,9 @@ use App\CustomClasses\PHPCrawl\libs\Utils\PHPCrawlerUtils;
  */
 class PHPCrawler
 {
+
+  public $all_links_found = [];
+
   public $class_version = "0.83rc1";
 
   /**
@@ -530,6 +533,7 @@ class PHPCrawler
   /**
    * Starts the loop of the controller-process (main-process).
    */
+
   protected function startControllerProcessLoop()
   {
     // If multiprocess-mode is not MPMODE_PARENT_EXECUTES_USERCODE -> exit process
@@ -635,7 +639,7 @@ class PHPCrawler
       }
     }
 
-    // Loop enden gere. If child-process -> kill it
+    // Loop ended here. If child-process -> kill it
     if ($this->is_chlid_process == true)
     {
       if ($this->multiprocess_mode == PHPCrawlerMultiProcessModes::MPMODE_PARENT_EXECUTES_USERCODE) return;
@@ -1117,6 +1121,7 @@ class PHPCrawler
    *
    * @section 3 Overridable methods / User data-processing
    */
+
   public function handleDocumentInfo($DocInfo){
     // Just detect linebreak for output ("\n" in CLI-mode, otherwise "<br>").
     if (PHP_SAPI == "cli") $lb = "\n";
@@ -1138,10 +1143,11 @@ class PHPCrawler
 
     echo $lb;
 
-        // print "<pre>";
-        // print($DocInfo);
-        // print "</pre>";
-        // die();
+    $data = array();
+    $data["url"] = $DocInfo->url;
+    $data["status_code"] = $DocInfo->http_status_code;
+
+    $this->all_links_found[] = $data;
 
     flush();
   }
@@ -1485,7 +1491,7 @@ class PHPCrawler
    *
    * @param bool   $mode           Set to TRUE if you want the crawler to obey robots.txt-files.
    * @param string $robots_txt_uri Optionally. The URL or path to the robots.txt-file to obey as URI (like "http://mysite.com/path/myrobots.txt"
-                                   or "file://../a_robots_file.txt")
+   *                                or "file://../a_robots_file.txt")
    *                               If not set (or set to null), the crawler uses the default robots.txt-location of the root-URL ("http://rooturl.com/robots.txt")
    *
    * @return bool
