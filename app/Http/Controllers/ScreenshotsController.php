@@ -132,7 +132,7 @@ class ScreenshotsController extends Controller
         // gather user input
         //*/////////////////////////////////////////////////
 
-        echo "<p class=\"hold-tight\">Hold tight...</p>";
+        // echo "<p class=\"hold-tight\">Hold tight...</p>";
 
         $dimensions = array();
         $dimensions["height"] = $_POST["height"];
