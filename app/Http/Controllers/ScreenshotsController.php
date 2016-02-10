@@ -14,6 +14,7 @@ use Response;
 use View;
 use Input;
 use Validator;
+use ZipArchive;
 use Redirect;
 use File;
 use Session;
@@ -73,7 +74,7 @@ class ScreenshotsController extends Controller
 
         $crawler->enableCookieHandling(true);                       // store and send cookie-data like a browser does
 
-        // $crawler->setTrafficLimit(1000 * 1024);                     // limiting traffic (for dev)
+        $crawler->setTrafficLimit(1000 * 1024);                     // limiting traffic (for dev)
 
         $crawler->go();                                             // all info in, good to go
 
@@ -99,6 +100,33 @@ class ScreenshotsController extends Controller
 
     }
 
+    public function zipIt($newDir, $domain){
+        // Choose a name for the archive.
+        $zipFileName = $domain . ".zip";
+
+        // Create zipfile in public directory of project.
+        $zip = new ZipArchive;
+        if ($zip->open(public_path() . '/uploads/' . $zipFileName, ZipArchive::CREATE) === TRUE)
+        {
+
+            // Copy all the files from the folder and place them in the archive.
+            foreach (glob($newDir . '/*') as $fileName) {
+                    $file = basename($fileName);
+                    $zip->addFile($fileName, $file);
+                }
+                $zip->close();
+
+                $headers = array(
+                    'Content-Type' => 'application/octet-stream',
+                );
+
+            // Download .zip file.
+            return Response::download(public_path() . '/uploads/' . $zipFileName, $zipFileName, $headers);
+        } else {
+            echo 'failed';
+        }
+    }
+
     public function grabShots()
     {
 
@@ -118,10 +146,10 @@ class ScreenshotsController extends Controller
         $uploadPath = base_path() . '/public/uploads/';         // path to uploads folder on server
         $parsedUrl = parse_url($userURL);                       // parsing user input
         $domain = $parsedUrl["host"];                           // grabbing just domain from user input
-        $newDir = $uploadPath . $domain . '_' . date('Y-m-d'.'-'.'H:i:s') . '/';  // new unique folder name
+        $uniqueFolder = $domain . '_' . date('Y-m-d'.'-'.'H:i:s') . '/'; // new unique folder name
+        $newDir = $uploadPath . $uniqueFolder;
 
         File::makeDirectory($newDir, 0777);                     // make new directory for screenshots
-
 
         //*/////////////////////////////////////////////////
         // crawl site for all possible links
@@ -129,11 +157,19 @@ class ScreenshotsController extends Controller
 
         $this->crawlSite($userURL, $newDir, $dimensions);
 
+        //*/////////////////////////////////////////////////
+        // zip up site folder with assets
+        //*/////////////////////////////////////////////////
+
+        $downloadZip = $this->zipIt($newDir, $uniqueFolder);
+
+        print $downloadZip;
+        die();
 
         //*/////////////////////////////////////////////////
         // return user back to homepage
         //*/////////////////////////////////////////////////
-        die();
+
         return redirect()->back();
 
     }
