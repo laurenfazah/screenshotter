@@ -70,11 +70,11 @@ class ScreenshotsController extends Controller
 
         $crawler->addContentTypeReceiveRule("#text/html#");         // only receive content-type "text/html"
 
-        $crawler->addURLFilterRule("#\.(jpg|jpeg|gif|png)$# i");    // ignore & don't request pics
+        $crawler->addURLFilterRule("#\.(jpg|jpeg|gif|png|js|svg|css|ico|pdf)$# i");    // ignore & don't request pics
 
         $crawler->enableCookieHandling(true);                       // store and send cookie-data like a browser does
 
-        $crawler->setTrafficLimit(1000 * 1024);                     // limiting traffic (for dev)
+        // $crawler->setTrafficLimit(1000 * 1024);                     // limiting traffic (for dev)
 
         $crawler->go();                                             // all info in, good to go
 
