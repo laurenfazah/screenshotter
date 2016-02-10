@@ -13,6 +13,7 @@
 ### Libraries in use:
 * [PHPCrawl](http://phpcrawl.cuab.de/) for sitemapping
 * [PHP-PhantomJS](http://jonnnnyw.github.io/php-phantomjs/4.0/) for screenshotting
+* Built with [Laravel 5](https://laravel.com/)
 
 ### Current Status:
 Screenshotter is currently able to scrape a site for all internal pages, screenshot each page, and create a zipfile containing all screenshots available for download.
