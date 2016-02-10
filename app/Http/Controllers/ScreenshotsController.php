@@ -32,8 +32,6 @@ class ScreenshotsController extends Controller
 
         $filepath = $newDir . $urlHost . "_" . $urlPathName . ".jpg";
 
-        print $filepath . "<br>";
-
         $client = Client::getInstance();
 
         $client->getEngine()->setPath(base_path().'/bin/phantomjs');
@@ -167,7 +165,11 @@ class ScreenshotsController extends Controller
         // return user back to homepage
         //*/////////////////////////////////////////////////
 
-        return redirect()->back();
+        $data = [];
+        $data["domain"] = $domain;
+        $data["ziplink"] = "/uploads/" . $uniqueFolder . ".zip";
+
+        return view('pages.report')->with('data', $data);
 
     }
 }
