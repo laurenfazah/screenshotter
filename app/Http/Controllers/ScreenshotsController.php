@@ -64,13 +64,12 @@ class ScreenshotsController extends Controller
     {
 
         $crawler = new PHPCrawler();                                // set new class instances
-        $crawlerInfo = new PHPCrawlerDocumentInfo();
 
         $crawler->setURL($site);                                    // URL to crawl
 
         $crawler->addContentTypeReceiveRule("#text/html#");         // only receive content-type "text/html"
 
-        $crawler->addURLFilterRule("#\.(jpg|jpeg|gif|png|js|svg|css|ico|pdf)$# i");    // ignore & don't request pics
+        $crawler->addURLFilterRule("#\.(jpg|jpeg|gif|png|js|svg|css|ico|pdf|mp3|mp4|webm)$# i");    // ignore & don't request pics
 
         $crawler->enableCookieHandling(true);                       // store and send cookie-data like a browser does
 
