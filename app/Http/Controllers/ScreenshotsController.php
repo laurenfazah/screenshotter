@@ -146,8 +146,8 @@ class ScreenshotsController extends Controller
         $uploadPath = base_path() . '/public/uploads/';         // path to uploads folder on server
         $parsedUrl = parse_url($userURL);                       // parsing user input
         $domain = $parsedUrl["host"];                           // grabbing just domain from user input
-        $uniqueFolder = $domain . '_' . date('Y-m-d'.'-'.'H:i:s') . '/'; // new unique folder name
-        $newDir = $uploadPath . $uniqueFolder;
+        $uniqueFolder = $domain . '_' . date('Y-m-d'.'-'.'H:i:s'); // new unique folder name
+        $newDir = $uploadPath . $uniqueFolder . '/';
 
         File::makeDirectory($newDir, 0777);                     // make new directory for screenshots
 
@@ -161,10 +161,7 @@ class ScreenshotsController extends Controller
         // zip up site folder with assets
         //*/////////////////////////////////////////////////
 
-        $downloadZip = $this->zipIt($newDir, $uniqueFolder);
-
-        print $downloadZip;
-        die();
+        $this->zipIt($newDir, $uniqueFolder);
 
         //*/////////////////////////////////////////////////
         // return user back to homepage
