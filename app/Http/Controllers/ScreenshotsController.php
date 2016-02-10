@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+ini_set('display_errors', 1);
+
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -22,37 +24,40 @@ class ScreenshotsController extends Controller
 
     public function takeScreenshots($site, $newDir, $dimensions)
     {
-        if ($site["status_code"] === 200) {
 
-            $url = $site["url"];
-            $filepath = $newDir . $url . ".jpg";
+        $urlHost = parse_url($site)["host"];
+        $urlPath = isset(parse_url($site)['path']) ? parse_url($site)['path'] : '';
+        $urlPathName = str_replace("/", "",$urlPath);
 
-            $client = Client::getInstance();
+        $filepath = $newDir . $urlHost . "_" . $urlPathName . ".jpg";
 
-            $client->getEngine()->setPath(base_path().'/bin/phantomjs');
+        print $filepath . "<br>";
 
-            $width  = $dimensions["width"];
-            $height = $dimensions["height"];
-            $top    = 0;
-            $left   = 0;
+        $client = Client::getInstance();
 
-            /**
-             * @see JonnyW\PhantomJs\Message\CaptureRequest
-             **/
-            $request = $client->getMessageFactory()->createCaptureRequest($url, 'GET');
-            $request->setOutputFile($filepath);
-            $request->setViewportSize($width, $height);
-            $request->setCaptureDimensions($width, $height, $top, $left);
+        $client->getEngine()->setPath(base_path().'/bin/phantomjs');
 
-            /**
-             * @see JonnyW\PhantomJs\Message\Response
-             **/
-            $response = $client->getMessageFactory()->createResponse();
+        $width  = $dimensions["width"];
+        $height = $dimensions["height"];
+        $top    = 0;
+        $left   = 0;
 
-            // Send the request
-            $client->send($request, $response);
+        /**
+         * @see JonnyW\PhantomJs\Message\CaptureRequest
+         **/
+        $request = $client->getMessageFactory()->createCaptureRequest($site, 'GET');
+        $request->setOutputFile($filepath);
+        $request->setViewportSize($width, $height);
+        $request->setCaptureDimensions($width, $height, $top, $left);
 
-        }
+        /**
+         * @see JonnyW\PhantomJs\Message\Response
+         **/
+        $response = $client->getMessageFactory()->createResponse();
+
+        // Send the request
+        $client->send($request, $response);
+
     }
 
     public function crawlSite($site, $newDir, $dimensions)
@@ -73,16 +78,25 @@ class ScreenshotsController extends Controller
 
         $crawler->go();                                             // all info in, good to go
 
-        $siteLinks = $crawler->all_links_found;
+        $allLinks = $crawler->all_links_found;
+
+        $siteLinks = [];
+
+        foreach ($allLinks as $link) {                             // only grab 200s
+            if ($link["status_code"] === 200){
+                $siteLinks[] = $link["url"];
+            }
+        }
+
+        $uniqueLinks = array_unique($siteLinks);                    // clear out duplicates
 
         //*/////////////////////////////////////////////////
         // take screenshots of site
         //*/////////////////////////////////////////////////
 
-        foreach ($siteLinks as $link) {
+        foreach ($uniqueLinks as $link) {
             $this->takeScreenshots($link, $newDir, $dimensions);  // follow through to take screenshots
         }
-
 
     }
 
@@ -120,7 +134,7 @@ class ScreenshotsController extends Controller
         //*/////////////////////////////////////////////////
         // return user back to homepage
         //*/////////////////////////////////////////////////
-
+        die();
         return redirect()->back();
 
     }
