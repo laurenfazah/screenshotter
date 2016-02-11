@@ -3,17 +3,17 @@ Encoding.default_external = "utf-8"
 
 # Set this to the root of your project when deployed:
 http_path = "/"
-css_dir = "html/stylesheets"
-sass_dir = "build/sass"
-images_dir = "html/img"
-javascripts_dir = "html/js"
+css_dir = "public/stylesheets"
+sass_dir = "public/build/sass"
+images_dir = "public/img"
+javascripts_dir = "public/js"
 
 # You can select your preferred output style here (can be overridden via the command line):
 output_style = :compressed
 
 # To enable relative paths to assets via compass helper functions. Uncomment:
 relative_assets = true
-http_images_dir = "html/img"
+http_images_dir = "public/img"
 
 sourcemap = true
 

@@ -1,0 +1,20 @@
+header {
+    @include size(100% 20vh);
+    position: relative;
+    .titles{
+        @extend %absolute-middle;
+        text-align: center;
+        h1, h2{
+            color: $primary;
+            font-family: Georgia;
+        }
+        h1{
+            font-size: 3em;
+            line-height: 2;
+        }
+        h2{
+            font-size: 1em;
+            font-style: italic;
+        }
+    }
+}

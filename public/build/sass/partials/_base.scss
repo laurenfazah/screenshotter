@@ -18,7 +18,7 @@ $linkedin: #3574af;
 
 $light:#fff;
 $dark: #333;
-$primary: #00B2EA;
+$primary: #00b890;
 
 /*//////////////////////////////////////
 //  fonts
@@ -134,6 +134,22 @@ button,input[type="submit"]{
     display:block;
 }
 
+%form-base{
+    display: block;
+    max-width: 300px;
+    margin: 0 auto;
+    @include pad(20px default);
+}
+
+%form-cta{
+    margin-top: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    display:block;
+    background: $dark;
+    color:$light;
+    font-size: .75em;
+}
 
 body,html{
     display:block;

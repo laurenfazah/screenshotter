@@ -1,20 +1,14 @@
 form[name="url-input"]{
     text-align: center;
     @extend %absolute-middle;
-    top: 40%;
+    top: 50%;
+    label, input, div.message{
+        @extend %form-base;
+    }
     label, input{
         @extend %default-transition;
-        display: block;
-        margin: 0 auto;
-        @include pad(20px default);
         &[type="submit"]{
-            margin-top: 20px;
-            text-transform: uppercase;
-            text-align: center;
-            display:block;
-            background: $dark;
-            color:$light;
-            border:1px solid;
+            @extend %form-cta;
             &:hover{
                 background: $light;
                 color: $dark;
@@ -23,8 +17,33 @@ form[name="url-input"]{
     }
     input{
         width: 70%;
-        max-width: 300px;
+        border: 1px $primary solid;
+        &.submitting{
+            display: none;
+        }
+    }
+    div.message{
+        display: none;
+        @extend %form-cta;
+        background:  -webkit-linear-gradient(
+            left,
+            $primary 30%,
+            #1ad2aa 80%,
+            $primary 100%
+        ) repeat;
+        -webkit-background-size: 50% 100%;
+        -webkit-animation-name: moving-gradient;
+        -webkit-animation-duration: 1s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-timing-function: linear;
+        border: none;
+        &.submitting{
+            display: block;
+        }
     }
 }
 
-
+@-webkit-keyframes moving-gradient {
+    0% { background-position: left bottom; }
+    100% { background-position: right bottom; }
+}

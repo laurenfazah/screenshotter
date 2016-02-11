@@ -98,7 +98,8 @@ class ScreenshotsController extends Controller
 
     }
 
-    public function zipIt($newDir, $domain){
+    public function zipIt($newDir, $domain)
+    {
         // Choose a name for the archive.
         $zipFileName = $domain . ".zip";
 
@@ -125,7 +126,7 @@ class ScreenshotsController extends Controller
         }
     }
 
-    public function grabShots()
+    public function grabShots(Request $request)
     {
 
         //*/////////////////////////////////////////////////
@@ -134,10 +135,10 @@ class ScreenshotsController extends Controller
 
         // echo "<p class=\"hold-tight\">Hold tight...</p>";
 
-        $dimensions = array();
-        $dimensions["height"] = $_POST["height"];
-        $dimensions["width"] = $_POST["width"];
-        $userURL = $_POST["url"];
+        $dimensions = [];
+        $dimensions["height"] = $request->input("height");
+        $dimensions["width"] = $request->input("width");
+        $userURL = $request->input("url");
 
         //*/////////////////////////////////////////////////
         // create new folder based on user input
@@ -146,7 +147,7 @@ class ScreenshotsController extends Controller
         $uploadPath = base_path() . '/public/uploads/';         // path to uploads folder on server
         $parsedUrl = parse_url($userURL);                       // parsing user input
         $domain = $parsedUrl["host"];                           // grabbing just domain from user input
-        $uniqueFolder = $domain . '_' . date('Y-m-d'.'-'.'H:i:s'); // new unique folder name
+        $uniqueFolder = $domain . '_' . time(); // new unique folder name
         $newDir = $uploadPath . $uniqueFolder . '/';
 
         File::makeDirectory($newDir, 0777);                     // make new directory for screenshots

@@ -1,0 +1,29 @@
+.report{
+    position: relative;
+    height: 100vh;
+    text-align: center;
+    .download-link{
+        @extend %absolute-middle;
+        display: block;
+        text-decoration: none;
+        border: 1px $light solid;
+        padding: 40px;
+        background-color: rgba(0, 184, 144, .5);
+        p{
+            margin-bottom: 40px;
+            color: $dark;
+        }
+        img{
+            @extend %default-transition;
+            max-width: 100px;
+            display: block;
+            margin: 0 auto;
+            opacity: .7;
+        }
+        &:hover{
+            img{
+                opacity: .4;
+            }
+        }
+    }
+}
