@@ -16,7 +16,7 @@
         <input type="url" name="url" placeholder="http://example.com" required>
 
         <label for="height">Viewport height (px):</label>
-        <input type="text" name="height" placeholder="2000" required>
+        <input type="text" name="height" placeholder="5000" required>
 
         <label for="width">Viewport width (px):</label>
         <input type="text" name="width" placeholder="1400" required>
@@ -24,7 +24,8 @@
         <input type="submit" value="Submit">
 
         <div class="message">
-            <p>Hang tight and don't refresh!</p>
+            <p>Grab a coffee and don't refresh the page!</p>
+            <p>This could take a while.</p>
         </div>
     </form>
 

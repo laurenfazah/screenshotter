@@ -138,6 +138,8 @@ class ScreenshotsController extends Controller
         $dimensions = [];
         $dimensions["height"] = $request->input("height");
         $dimensions["width"] = $request->input("width");
+        // $dimensions["height"] = "100%";
+        // $dimensions["width"] = $request->input("width");
         $userURL = $request->input("url");
 
         //*/////////////////////////////////////////////////
