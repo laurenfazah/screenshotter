@@ -17,9 +17,9 @@ $(function(){
     $form.click(function(){
         if ($('#custom-dimensions').is(":checked")) {
             console.log("checked");
-            $('div.custom-dimensions').slideDown().show();
+            $('fieldset.custom-dimensions').slideDown().show();
         } else {
-            $('div.custom-dimensions').slideUp();
+            $('fieldset.custom-dimensions').slideUp();
         }
     });
 

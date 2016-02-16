@@ -12,22 +12,27 @@
 <main>
 
    <form name="url-input" action="grabShots" class="block" method="post">
-        <label for="url">Website's root URL:</label>
-        <input type="url" name="url" placeholder="http://example.com" required>
+        <fieldset class="url">
+            <label for="url">Website's root URL:</label>
+            <input type="url" name="url" placeholder="http://example.com" required>
+        </fieldset>
 
-        <label for="device">Which size device would you like to emulate these screenshots on (in pixels)?</label>
-        <input type="radio" name="device" value="mobile" required> Mobile (414x624)
-        <input type="radio" name="device" value="tablet" required> Tablet (768x1024)
-        <input type="radio" name="device" value="desktop" required> Desktop (1280x1024)
-        <input type="radio" name="device" value="custom" id="custom-dimensions" required> Custom
+        <fieldset class="dimensions">
+            <p>Which size device would you like to emulate these screenshots on (in pixels)?</p>
 
-        <div class="custom-dimensions">
+            <label><input type="radio" name="device" value="mobile" required> Mobile (414x624)</label>
+            <label><input type="radio" name="device" value="tablet" required> Tablet (768x1024)</label>
+            <label><input type="radio" name="device" value="desktop" required> Desktop (1280x1024)</label>
+            <label><input type="radio" name="device" value="custom" id="custom-dimensions" required> Custom</label>
+        </fieldset>
+
+        <fieldset class="custom-dimensions">
             <label for="width">Custom viewport width (px):</label>
             <input type="text" name="width" placeholder="1200" required>
 
             <label for="height">Custom viewport height (px):</label>
             <input type="text" name="height" placeholder="900" required>
-        </div>
+        </fieldset>
 
         <input type="submit" value="Submit">
 

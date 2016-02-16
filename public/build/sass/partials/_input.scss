@@ -1,8 +1,7 @@
 form[name="url-input"]{
     text-align: center;
-    @extend %absolute-middle;
-    top: 50%;
-    label, input, div.message{
+    margin: 0 auto;
+    label, input, div.message, p{
         @extend %form-base;
     }
     label, input{
@@ -11,19 +10,25 @@ form[name="url-input"]{
             @extend %form-cta;
             &:hover{
                 background: $primary;
-                // color: $dark;
             }
         }
     }
-    input{
+    input[type="url"], input[type="submit"], input[type="text"]{
         width: 70%;
         border: 1px $primary solid;
         &.submitting{
             display: none;
         }
     }
-    label{
-        color: $primary;
+    fieldset.dimensions{
+        text-align: center;
+        input[type="radio"]{
+            vertical-align: middle;
+            float: left;
+        }
+    }
+    label, p{
+        color: $light;
     }
     div.message{
         display: none;
