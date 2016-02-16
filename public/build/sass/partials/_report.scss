@@ -11,23 +11,26 @@
         background-color: rgba(0, 184, 144, .5);
         p{
             margin-bottom: 40px;
-            color: $dark;
+            color: $light;
         }
         img{
             @extend %default-transition;
             max-width: 100px;
             display: block;
             margin: 0 auto;
-            opacity: .7;
+            opacity: .4;
         }
         &:hover{
             img{
-                opacity: .4;
+                opacity: .7;
             }
         }
     }
     .return{
         @include position(absolute, auto auto 10vh auto);
         width: 100%;
+        a {
+            color: $light;
+        }
     }
 }

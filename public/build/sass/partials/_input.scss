@@ -10,8 +10,8 @@ form[name="url-input"]{
         &[type="submit"]{
             @extend %form-cta;
             &:hover{
-                background: $light;
-                color: $dark;
+                background: $primary;
+                // color: $dark;
             }
         }
     }
@@ -21,6 +21,9 @@ form[name="url-input"]{
         &.submitting{
             display: none;
         }
+    }
+    label{
+        color: $primary;
     }
     div.message{
         display: none;
@@ -40,6 +43,9 @@ form[name="url-input"]{
         &.submitting{
             display: block;
         }
+    }
+    .custom-dimensions{
+        display: none;
     }
 }
 

@@ -11,6 +11,20 @@ $(function(){
     });
 
     $('input[name="height"]').val("5000");
-    $('input[name="width"]').val("1400");
+    $('input[name="width"]').val("2000");
+
+    //*/////////////////////////////////////////////////
+    // form logic
+    //*/////////////////////////////////////////////////
+
+    $form.click(function(){
+        if ($('#custom-dimensions').is(":checked")) {
+            console.log("checked");
+            $('div.custom-dimensions').slideDown().show();
+        } else {
+            $('div.custom-dimensions').slideUp();
+        }
+    });
+
 
 });

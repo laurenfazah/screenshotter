@@ -15,11 +15,16 @@
         <label for="url">Website's root URL:</label>
         <input type="url" name="url" placeholder="http://example.com" required>
 
-        <label for="height">Viewport height (px):</label>
-        <input type="text" name="height" placeholder="5000" required>
+        <label for="device">Which size device would you like to emulate these screenshots on?</label>
+        <input type="radio" name="device" value="mobile" required> Mobile
+        <input type="radio" name="device" value="tablet" required> Tablet
+        <input type="radio" name="device" value="Desktop" required> Desktop
+        <input type="radio" name="device" value="Custom" id="custom-dimensions" required> Custom
 
-        <label for="width">Viewport width (px):</label>
-        <input type="text" name="width" placeholder="1400" required>
+        <div class="custom-dimensions">
+            <label for="width">Custom viewport width (px):</label>
+            <input type="text" name="width" placeholder="1200" required>
+        </div>
 
         <input type="submit" value="Submit">
 

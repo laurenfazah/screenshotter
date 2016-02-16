@@ -47,7 +47,6 @@ class ScreenshotsController extends Controller
         $request = $client->getMessageFactory()->createCaptureRequest($site, 'GET');
         $request->setOutputFile($filepath);
         $request->setViewportSize($width, $height);
-        $request->setCaptureDimensions($width, $height, $top, $left);
 
         /**
          * @see JonnyW\PhantomJs\Message\Response
@@ -72,7 +71,7 @@ class ScreenshotsController extends Controller
 
         $crawler->enableCookieHandling(true);                       // store and send cookie-data like a browser does
 
-        // $crawler->setTrafficLimit(1000 * 1024);                     // limiting traffic (for dev)
+        $crawler->setTrafficLimit(1000 * 1024);                     // limiting traffic (for dev)
 
         $crawler->go();                                             // all info in, good to go
 
@@ -133,13 +132,9 @@ class ScreenshotsController extends Controller
         // gather user input
         //*/////////////////////////////////////////////////
 
-        // echo "<p class=\"hold-tight\">Hold tight...</p>";
-
         $dimensions = [];
         $dimensions["height"] = $request->input("height");
         $dimensions["width"] = $request->input("width");
-        // $dimensions["height"] = "100%";
-        // $dimensions["width"] = $request->input("width");
         $userURL = $request->input("url");
 
         //*/////////////////////////////////////////////////
