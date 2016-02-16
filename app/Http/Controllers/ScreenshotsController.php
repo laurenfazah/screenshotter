@@ -133,8 +133,21 @@ class ScreenshotsController extends Controller
         //*/////////////////////////////////////////////////
 
         $dimensions = [];
-        $dimensions["height"] = $request->input("height");
-        $dimensions["width"] = $request->input("width");
+
+        if ($request->input("device") === "mobile"){
+            $dimensions["height"] = "624";
+            $dimensions["width"] = "414";
+        } elseif ($request->input("device") === "tablet") {
+            $dimensions["height"] = "1024";
+            $dimensions["width"] = "768";
+        } elseif ($request->input("device") === "desktop") {
+            $dimensions["height"] = "1024";
+            $dimensions["width"] = "1280";
+        } elseif ($request->input("device") === "custom") {
+            $dimensions["height"] = $request->input("height");
+            $dimensions["width"] = $request->input("width");
+        }
+
         $userURL = $request->input("url");
 
         //*/////////////////////////////////////////////////
@@ -144,7 +157,7 @@ class ScreenshotsController extends Controller
         $uploadPath = base_path() . '/public/uploads/';         // path to uploads folder on server
         $parsedUrl = parse_url($userURL);                       // parsing user input
         $domain = $parsedUrl["host"];                           // grabbing just domain from user input
-        $uniqueFolder = $domain . '_' . time(); // new unique folder name
+        $uniqueFolder = $domain . '_' . time();                 // new unique folder name
         $newDir = $uploadPath . $uniqueFolder . '/';
 
         File::makeDirectory($newDir, 0777);                     // make new directory for screenshots

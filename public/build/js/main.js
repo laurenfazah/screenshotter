@@ -10,9 +10,6 @@ $(function(){
         $('input[type="submit"], div.message').addClass("submitting");
     });
 
-    $('input[name="height"]').val("5000");
-    $('input[name="width"]').val("2000");
-
     //*/////////////////////////////////////////////////
     // form logic
     //*/////////////////////////////////////////////////
