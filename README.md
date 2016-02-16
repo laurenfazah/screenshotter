@@ -16,4 +16,4 @@
 * Built with [Laravel 5](https://laravel.com/)
 
 ### Current Status:
-Screenshotter is currently able to scrape a site for all internal pages, screenshot each page, and create a zipfile containing all screenshots available for download.
+Screenshotter is currently able to scrape a site for all internal pages, screenshot each page at custom dimensions, and create a zipfile containing all screenshots available for download.
