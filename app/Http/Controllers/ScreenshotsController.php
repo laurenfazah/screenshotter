@@ -147,7 +147,7 @@ class ScreenshotsController extends Controller
             $stats["height"] = "1024";
             $stats["width"] = "1280";
         } elseif ($request->input("device") === "custom") {
-            $stats["height"] = $request->input("height");
+            $stats["height"] = "900";
             $stats["width"] = $request->input("width");
         }
 

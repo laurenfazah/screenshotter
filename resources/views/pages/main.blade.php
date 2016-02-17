@@ -37,11 +37,8 @@
         </fieldset>
 
         <fieldset class="custom-dimensions">
-            <label for="width">Custom viewport width (px):</label>
+            <label for="width">Viewport width in pixels (height determined by content) :</label>
             <input type="text" name="width" placeholder="1200">
-
-            <label for="height">Custom viewport height (px):</label>
-            <input type="text" name="height" placeholder="900">
         </fieldset>
 
         <input type="submit" value="Submit">

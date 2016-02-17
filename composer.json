@@ -9,8 +9,9 @@
         "laravel/framework": "5.2.*",
         "codeguy/arachnid": "1.*",
         "phpclasses/spider": ">=0.1",
-        "jonnyw/php-phantomjs":"4.*"
-    },
+        "jonnyw/php-phantomjs":"4.*",
+        "mobiledetect/mobiledetectlib": "^2.8"
+     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
