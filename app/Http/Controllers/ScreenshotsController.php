@@ -23,7 +23,7 @@ use DOMDocument;
 class ScreenshotsController extends Controller
 {
 
-    public function takeScreenshots($site, $newDir, $stats)
+    public function takeScreenshots($site, $newDir, $stats, $siteStatus)
     {
 
         $delay = $stats["delay"];
@@ -32,7 +32,11 @@ class ScreenshotsController extends Controller
         $urlPath = isset(parse_url($site)['path']) ? parse_url($site)['path'] : '';
         $urlPathName = str_replace("/", "",$urlPath);
 
-        $filepath = $newDir . $urlHost . "_" . $urlPathName . ".jpg";
+        if ($siteStatus === "OK") {
+            $filepath = $newDir . $urlHost . "_" . $urlPathName . ".jpg";
+        } elseif ($siteStatus === "404") {
+            $filepath = $newDir . $urlHost . "_" . $urlPathName . "_" . $siteStatus  . ".jpg";
+        }
 
         $client = Client::getInstance();
 
@@ -74,30 +78,38 @@ class ScreenshotsController extends Controller
 
         $crawler->enableCookieHandling(true);                       // store and send cookie-data like a browser does
 
-        $crawler->setTrafficLimit(1000 * 1024);                     // limiting traffic (for dev)
+        // $crawler->setTrafficLimit(1000 * 1024);                     // limiting traffic (for dev)
 
         $crawler->go();                                             // all info in, good to go
 
         $allLinks = $crawler->all_links_found;
 
         $siteLinks = [];
+        $deadLinks = [];
 
-        foreach ($allLinks as $link) {                             // only grab 200s
+        // dead and live links kept separate in case of a rollback to just 200s
+        foreach ($allLinks as $link) {
             if ($link["status_code"] === 200){
                 $siteLinks[] = $link["url"];
+            } elseif ($link["status_code"] === 404) {
+                $deadLinks[] = $link["url"];
             }
         }
 
         $uniqueLinks = array_unique($siteLinks);                    // clear out duplicates
+        $uniqueDeadLinks = array_unique($deadLinks);                // clear out duplicates
 
         //*/////////////////////////////////////////////////
         // take screenshots of site
         //*/////////////////////////////////////////////////
 
         foreach ($uniqueLinks as $link) {
-            $this->takeScreenshots($link, $newDir, $stats);  // follow through to take screenshots
+            $this->takeScreenshots($link, $newDir, $stats, "OK");   // follow through to take screenshots
         }
 
+        foreach ($uniqueDeadLinks as $link) {
+            $this->takeScreenshots($link, $newDir, $stats, "404");  // follow through to take screenshots
+        }
     }
 
     public function zipIt($newDir, $domain)
