@@ -20,11 +20,15 @@ form[name="url-input"]{
             display: none;
         }
     }
-    fieldset.dimensions{
+    fieldset.dimensions, fieldset.delay{
         text-align: center;
         input[type="radio"]{
             vertical-align: middle;
             float: left;
+        }
+        label{
+            @include pad(10px default);
+            max-width: 300px;
         }
     }
     fieldset.custom-dimensions{
