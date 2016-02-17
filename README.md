@@ -18,10 +18,10 @@
 
 ### Current Status:
 
-#### Screenshotter is currently able to:
+Screenshotter is currently able to:
 * scrape a site for all internal pages
 * screenshot each page at custom dimensions
 * create a zipfile containing all screenshots available for download
 
-#### Screenshotter will now only work on desktop
+**Screenshotter will only work on desktop**
 
