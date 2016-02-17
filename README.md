@@ -14,7 +14,7 @@
 * [PHPCrawl](http://phpcrawl.cuab.de/) for sitemapping
 * [PHP-PhantomJS](http://jonnnnyw.github.io/php-phantomjs/4.0/) for screenshotting
 * [Jens Segers Agent Parser](https://github.com/jenssegers/agent) for device detection
-* Built with [Laravel 5](https://laravel.com/)
+* Built with [Laravel](https://laravel.com/)
 
 ### Current Status:
 
