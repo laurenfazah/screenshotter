@@ -13,7 +13,15 @@
 ### Libraries in use:
 * [PHPCrawl](http://phpcrawl.cuab.de/) for sitemapping
 * [PHP-PhantomJS](http://jonnnnyw.github.io/php-phantomjs/4.0/) for screenshotting
+* [Jens Segers Agent Parser](https://github.com/jenssegers/agent) for device detection
 * Built with [Laravel 5](https://laravel.com/)
 
 ### Current Status:
-Screenshotter is currently able to scrape a site for all internal pages, screenshot each page at custom dimensions, and create a zipfile containing all screenshots available for download.
+
+#### Screenshotter is currently able to:
+* scrape a site for all internal pages
+* screenshot each page at custom dimensions
+* create a zipfile containing all screenshots available for download
+
+#### Screenshotter will now only work on desktop
+
