@@ -10,7 +10,7 @@
         "codeguy/arachnid": "1.*",
         "phpclasses/spider": ">=0.1",
         "jonnyw/php-phantomjs":"4.*",
-        "mobiledetect/mobiledetectlib": "^2.8"
+        "jenssegers/agent": "^2.3"
      },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

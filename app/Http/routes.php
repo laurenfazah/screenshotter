@@ -11,11 +11,25 @@
 |
 */
 
-Route::get('/', function () {
-    return view('pages/main');
-});
+use Jenssegers\Agent\Agent;
 
-Route::post('grabShots', 'ScreenshotsController@grabShots');
+$agent = new Agent();
+
+if ($agent->isMobile()) {
+
+    Route::get('/', function () {
+        return view('pages/mobile');
+    });
+
+} else {
+
+    Route::get('/', function () {
+        return view('pages/main');
+    });
+
+    Route::post('grabShots', 'ScreenshotsController@grabShots');
+}
+
 
 /*
 |--------------------------------------------------------------------------

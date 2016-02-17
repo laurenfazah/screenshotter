@@ -1,5 +1,6 @@
 header {
-    @include size(80% 20vh);
+    display: none;
+    @include size(80% 10vh);
     margin: 0 auto;
     background-color: rgba(0, 0, 0, .2);
     position: relative;
