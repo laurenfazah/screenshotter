@@ -15,19 +15,19 @@ use Jenssegers\Agent\Agent;
 
 $agent = new Agent();
 
-if ($agent->isMobile()) {
-
-    Route::get('/', function () {
-        return view('pages/mobile');
-    });
-
-} else {
+if ($agent->isDesktop()) {
 
     Route::get('/', function () {
         return view('pages/main');
     });
 
     Route::post('grabShots', 'ScreenshotsController@grabShots');
+
+} else {
+
+    Route::get('/', function () {
+        return view('pages/mobile');
+    });
 }
 
 
