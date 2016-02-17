@@ -17,6 +17,16 @@
             <input type="url" name="url" placeholder="http://example.com" required>
         </fieldset>
 
+        <fieldset class="delay">
+            <p>How much of a delay should be built in for each page's screenshot?</p>
+
+            <label><input type="radio" name="delay" value="0" required>None</label>
+            <label><input type="radio" name="delay" value="2" required>2 seconds</label>
+            <label><input type="radio" name="delay" value="5" required>5 seconds</label>
+            <label><input type="radio" name="delay" value="10" required>10 seconds</label>
+            <label><input type="radio" name="delay" value="15" required>15 seconds</label>
+        </fieldset>
+
         <fieldset class="dimensions">
             <p>Which size device would you like to emulate these screenshots on (in pixels)?</p>
 

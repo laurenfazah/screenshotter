@@ -23,10 +23,10 @@ use DOMDocument;
 class ScreenshotsController extends Controller
 {
 
-    public function takeScreenshots($site, $newDir, $dimensions)
+    public function takeScreenshots($site, $newDir, $stats)
     {
 
-        $delay = 2;
+        $delay = $stats["delay"];
 
         $urlHost = parse_url($site)["host"];
         $urlPath = isset(parse_url($site)['path']) ? parse_url($site)['path'] : '';
@@ -38,8 +38,8 @@ class ScreenshotsController extends Controller
 
         $client->getEngine()->setPath(base_path().'/bin/phantomjs');
 
-        $width  = $dimensions["width"];
-        $height = $dimensions["height"];
+        $width  = $stats["width"];
+        $height = $stats["height"];
         $top    = 0;
         $left   = 0;
 
@@ -61,7 +61,7 @@ class ScreenshotsController extends Controller
 
     }
 
-    public function crawlSite($site, $newDir, $dimensions)
+    public function crawlSite($site, $newDir, $stats)
     {
 
         $crawler = new PHPCrawler();                                // set new class instances
@@ -95,7 +95,7 @@ class ScreenshotsController extends Controller
         //*/////////////////////////////////////////////////
 
         foreach ($uniqueLinks as $link) {
-            $this->takeScreenshots($link, $newDir, $dimensions);  // follow through to take screenshots
+            $this->takeScreenshots($link, $newDir, $stats);  // follow through to take screenshots
         }
 
     }
@@ -135,21 +135,23 @@ class ScreenshotsController extends Controller
         // gather user input
         //*/////////////////////////////////////////////////
 
-        $dimensions = [];
+        $stats = [];
 
         if ($request->input("device") === "mobile"){
-            $dimensions["height"] = "624";
-            $dimensions["width"] = "414";
+            $stats["height"] = "624";
+            $stats["width"] = "414";
         } elseif ($request->input("device") === "tablet") {
-            $dimensions["height"] = "1024";
-            $dimensions["width"] = "768";
+            $stats["height"] = "1024";
+            $stats["width"] = "768";
         } elseif ($request->input("device") === "desktop") {
-            $dimensions["height"] = "1024";
-            $dimensions["width"] = "1280";
+            $stats["height"] = "1024";
+            $stats["width"] = "1280";
         } elseif ($request->input("device") === "custom") {
-            $dimensions["height"] = $request->input("height");
-            $dimensions["width"] = $request->input("width");
+            $stats["height"] = $request->input("height");
+            $stats["width"] = $request->input("width");
         }
+
+        $stats["delay"] = $request->input("delay");
 
         $userURL = $request->input("url");
 
@@ -169,7 +171,7 @@ class ScreenshotsController extends Controller
         // crawl site for all possible links
         //*/////////////////////////////////////////////////
 
-        $this->crawlSite($userURL, $newDir, $dimensions);
+        $this->crawlSite($userURL, $newDir, $stats);
 
         //*/////////////////////////////////////////////////
         // zip up site folder with assets
