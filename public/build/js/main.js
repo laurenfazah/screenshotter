@@ -1,5 +1,8 @@
 $(function(){
 
+    var primaryColor = "#00b890",
+        lightColor = "#fff";
+
     //*/////////////////////////////////////////////////
     // form submission
     //*/////////////////////////////////////////////////
@@ -16,12 +19,19 @@ $(function(){
 
     $form.click(function(){
         if ($('#custom-dimensions').is(":checked")) {
-            console.log("checked");
             $('fieldset.custom-dimensions').slideDown().show();
         } else {
             $('fieldset.custom-dimensions').slideUp();
         }
+
+        $('label').css('color', lightColor);
+        $('label:has(input[type="radio"]:checked)').css('color', primaryColor);
+
     });
 
+
+    //*/////////////////////////////////////////////////
+    // gathering download
+    //*/////////////////////////////////////////////////
 
 });

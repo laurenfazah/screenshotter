@@ -28,17 +28,16 @@
 
         <fieldset class="custom-dimensions">
             <label for="width">Custom viewport width (px):</label>
-            <input type="text" name="width" placeholder="1200" required>
+            <input type="text" name="width" placeholder="1200">
 
             <label for="height">Custom viewport height (px):</label>
-            <input type="text" name="height" placeholder="900" required>
+            <input type="text" name="height" placeholder="900">
         </fieldset>
 
         <input type="submit" value="Submit">
 
         <div class="message">
-            <p>Grab a coffee and don't refresh the page!</p>
-            <p>This could take a while.</p>
+            <p>Don't refresh the page - this could take a while.</p>
         </div>
     </form>
 

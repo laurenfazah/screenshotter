@@ -23,8 +23,8 @@ $primary: #00b890;
 /*//////////////////////////////////////
 //  fonts
 //////////////////////////////////////*/
-$font-sans: $helvetica;
-$font-serif: 'Crimson Sans', $georgia;
+$font-sans: 'Nunito', sans-serif;
+$font-serif: 'Lora', serif;
 
 h1,h2,h3,h4,h5,h6{
     font-weight:700;
@@ -160,6 +160,6 @@ body,html{
 body{
     font-size:100%;
     position:relative;
-    font-family:$helvetica;
+    font-family:$font-sans;
 }
 

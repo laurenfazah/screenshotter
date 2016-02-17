@@ -1,12 +1,14 @@
 header {
-    @include size(100% 20vh);
+    @include size(80% 20vh);
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, .2);
     position: relative;
     .titles{
         @extend %absolute-middle;
         text-align: center;
         h1, h2{
             color: $primary;
-            font-family: Georgia;
+            font-family: $font-serif;
         }
         h1{
             font-size: 3em;

@@ -7,18 +7,8 @@
 
         <title>Screenshotter</title>
 
-        <meta name="twitter:card" content="">
-        <meta name="twitter:site" content="">
-        <meta name="twitter:title" content="">
-        <meta name="twitter:description" content="">
-        <meta name="twitter:image:src" content="">
-
-        <meta property="og:title" content=""/>
-        <meta property="og:url" content=""/>
-        <meta property="og:image" content=""/>
-        <meta property="og:site_name" content=""/>
-        <meta property="og:description" content=""/>
-
+        <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="stylesheets/style.css">
 
         <script src="js/vendor/modernizr.js"></script>

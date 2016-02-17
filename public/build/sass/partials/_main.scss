@@ -1,0 +1,10 @@
+body {
+    background: image-url("footer_lodyas.png") repeat;
+    main {
+        width: 80%;
+        margin: 0 auto;
+        background-color: rgba(0, 0, 0, .2);
+        @include pad(100px default);
+        min-height: 80vh;
+    }
+}

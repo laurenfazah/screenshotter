@@ -27,26 +27,35 @@ form[name="url-input"]{
             float: left;
         }
     }
+    fieldset.custom-dimensions{
+        display: none;
+    }
     label, p{
         color: $light;
+    }
+    input[type="radio"]:checked + label{
+        color: $primary;
     }
     div.message{
         display: none;
         @extend %form-cta;
-        background:  -webkit-linear-gradient(
-            left,
-            $primary 30%,
-            #1ad2aa 80%,
-            $primary 100%
-        ) repeat;
-        -webkit-background-size: 50% 100%;
-        -webkit-animation-name: moving-gradient;
-        -webkit-animation-duration: 1s;
-        -webkit-animation-iteration-count: infinite;
-        -webkit-animation-timing-function: linear;
-        border: none;
+        @include pad(10px);
+        background-image: repeating-linear-gradient(
+            -45deg,
+            darken($primary, 20%),
+            darken($primary, 20%) 10px,
+            $dark 10px,
+            $dark 20px
+        );
+        background-size: 28px 200px;
+        @include animation(progress 1s linear infinite);
+        width: 50%;
         &.submitting{
             display: block;
+        }
+        & > p{
+            @include user-select(none);
+            cursor: default;
         }
     }
     .custom-dimensions{
@@ -54,7 +63,7 @@ form[name="url-input"]{
     }
 }
 
-@-webkit-keyframes moving-gradient {
-    0% { background-position: left bottom; }
-    100% { background-position: right bottom; }
+@include keyframes(progress) {
+    0%   { background-position: 0 0; }
+    100% { background-position: 28px 0; }
 }
