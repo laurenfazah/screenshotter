@@ -1,0 +1,11 @@
+.mobile-messaging{
+    @include size(100%);
+    position: relative;
+    h1 {
+        @extend %absolute-middle;
+        color: $light;
+        font-size: 32px;
+        line-height: 1.5;
+        text-align: center;
+    }
+}
