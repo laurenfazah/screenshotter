@@ -26,6 +26,8 @@ class ScreenshotsController extends Controller
     public function takeScreenshots($site, $newDir, $dimensions)
     {
 
+        $delay = 2;
+
         $urlHost = parse_url($site)["host"];
         $urlPath = isset(parse_url($site)['path']) ? parse_url($site)['path'] : '';
         $urlPathName = str_replace("/", "",$urlPath);
@@ -45,6 +47,7 @@ class ScreenshotsController extends Controller
          * @see JonnyW\PhantomJs\Message\CaptureRequest
          **/
         $request = $client->getMessageFactory()->createCaptureRequest($site, 'GET');
+        $request->setDelay($delay);
         $request->setOutputFile($filepath);
         $request->setViewportSize($width, $height);
 
