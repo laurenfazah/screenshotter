@@ -29,9 +29,22 @@ $(function(){
 
     });
 
-
     //*/////////////////////////////////////////////////
     // gathering download
     //*/////////////////////////////////////////////////
 
+    var downloadCheck = false;
+
+    $('#download').click(function(){
+        downloadCheck = true;
+    });
+
+    var confirmExit = function(){
+        if ((window.location.pathname === "/grabShots") && (downloadCheck === false)) {
+            return "You've attempted to leave this page without retrieving your download.";
+        }
+    };
+
+    window.onbeforeunload = confirmExit;
+    console.log(window.location.pathname );
 });
