@@ -61,6 +61,7 @@ form[name="url-input"]{
         & > p{
             @include user-select(none);
             cursor: default;
+            color: $light;
         }
     }
     .custom-dimensions{
