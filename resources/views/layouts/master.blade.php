@@ -7,11 +7,8 @@
 
         <title>Screenshotter</title>
 
-        <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="stylesheets/style.css">
 
-        <script src="js/vendor/modernizr.js"></script>
     </head>
     <body>
         <div class="container">

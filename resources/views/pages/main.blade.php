@@ -2,16 +2,15 @@
 
 @section('content')
 
-<header>
-    <div class="titles">
-        <h1>Screenshotter</h1>
-        <h2>Site-wide screenshooting made easy.</h2>
-    </div>
-</header>
+
 
 <main>
-
-   <form name="url-input" action="grabShots" class="block" method="post">
+    <header>
+        <div class="titles">
+            <h1>hh snaps</h1>
+        </div>
+    </header>
+    <form name="url-input" action="grabShots" class="block" method="post">
         <fieldset class="url">
             <label for="url">Website's root URL:</label>
             <input type="url" name="url" placeholder="http://example.com" required>

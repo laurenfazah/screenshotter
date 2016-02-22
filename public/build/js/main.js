@@ -1,7 +1,7 @@
 $(function(){
 
-    var primaryColor = "#00b890",
-        lightColor = "#fff";
+    var primaryColor = "#ff6d6d",
+        baseColor = "#333";
 
     //*/////////////////////////////////////////////////
     // form submission
@@ -24,7 +24,7 @@ $(function(){
             $('fieldset.custom-dimensions').slideUp();
         }
 
-        $('label').css('color', lightColor);
+        $('label').css('color', baseColor);
         $('label:has(input[type="radio"]:checked)').css('color', primaryColor);
 
     });

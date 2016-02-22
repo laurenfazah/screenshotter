@@ -9,13 +9,13 @@ form[name="url-input"]{
         &[type="submit"]{
             @extend %form-cta;
             &:hover{
-                background: $primary;
+                background: rgba($primary, .4);
             }
         }
     }
     input[type="url"], input[type="submit"], input[type="text"]{
         width: 70%;
-        border: 1px $primary solid;
+        border: none;
         &.submitting{
             display: none;
         }
@@ -35,7 +35,8 @@ form[name="url-input"]{
         display: none;
     }
     label, p{
-        color: $light;
+        color: $dark;
+        font-weight: 700;
     }
     input[type="radio"]:checked + label{
         color: $primary;
@@ -46,10 +47,10 @@ form[name="url-input"]{
         @include pad(10px);
         background-image: repeating-linear-gradient(
             -45deg,
-            darken($primary, 20%),
-            darken($primary, 20%) 10px,
-            $dark 10px,
-            $dark 20px
+            rgba($primary, .4),
+            rgba($primary, .4) 10px,
+            rgba($secondary, .4) 10px,
+            rgba($secondary, .4) 20px
         );
         background-size: 28px 200px;
         @include animation(progress 1s linear infinite);

@@ -1,10 +1,18 @@
 body {
-    background: image-url("footer_lodyas.png") repeat;
+    @include background(linear-gradient(50deg, $primary, $secondary));
+    background-attachment: fixed;
     main {
-        width: 80%;
-        margin: 0 auto;
-        background-color: rgba(0, 0, 0, .2);
         @include pad(100px default);
         min-height: 100vh;
+    }
+}
+
+@media all and(min-width: 800px){
+    body {
+        main {
+            width: 80%;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, .2);
+        }
     }
 }

@@ -7,6 +7,9 @@
 @import "bourbon/bourbon";
 @import "neat/neat";
 
+@import url(https://fonts.googleapis.com/css?family=Oswald);
+@import url(https://fonts.googleapis.com/css?family=Catamaran);
+
 /*//////////////////////////////////////
 //  colors
 //////////////////////////////////////*/
@@ -18,13 +21,15 @@ $linkedin: #3574af;
 
 $light:#fff;
 $dark: #333;
-$primary: #00b890;
+$primary: #2989d8;
+$secondary: #ff6d6d;
 
 /*//////////////////////////////////////
 //  fonts
 //////////////////////////////////////*/
-$font-sans: 'Nunito', sans-serif;
-$font-serif: 'Lora', serif;
+$font-sans: $helvetica, 'Catamaran', sans-serif;
+$font-slant: 'Oswald', sans-serif;
+$font-serif: $georgia, serif;
 
 h1,h2,h3,h4,h5,h6{
     font-weight:700;
