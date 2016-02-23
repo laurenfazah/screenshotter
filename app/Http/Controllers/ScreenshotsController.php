@@ -23,7 +23,7 @@ use DOMDocument;
 class ScreenshotsController extends Controller
 {
 
-    public function takeScreenshots($site, $newDir, $stats, $siteStatus)
+    public function takeScreenshots($site, $newDir, $stats, $siteStatus, $auth)
     {
 
         $delay = $stats["delay"];
@@ -51,6 +51,9 @@ class ScreenshotsController extends Controller
          * @see JonnyW\PhantomJs\Message\CaptureRequest
          **/
         $request = $client->getMessageFactory()->createCaptureRequest($site, 'GET');
+        if ($auth["status"] == true){
+            $request->addHeader('Authorization', 'Basic '. base64_encode($auth["username"].":".$auth["password"]));
+        }
         $request->setDelay($delay);
         $request->setOutputFile($filepath);
         $request->setViewportSize($width, $height);
@@ -65,8 +68,10 @@ class ScreenshotsController extends Controller
 
     }
 
-    public function crawlSite($site, $newDir, $stats)
+    public function crawlSite($site, $newDir, $stats, $auth)
     {
+        $trimmedSite = rtrim($site,"/");
+        $escapedSite = addslashes($trimmedSite);
 
         $crawler = new PHPCrawler();                                // set new class instances
 
@@ -74,11 +79,15 @@ class ScreenshotsController extends Controller
 
         $crawler->addContentTypeReceiveRule("#text/html#");         // only receive content-type "text/html"
 
+        if ($auth["status"] == true){
+            $crawler->addBasicAuthentication("#". $trimmedSite ."#", $auth["username"], $auth["password"]);
+        }
+
         $crawler->addURLFilterRule("#\.(jpg|jpeg|gif|png|js|svg|css|ico|pdf|mp3|mp4|webm)$# i");    // ignore & don't request pics
 
         $crawler->enableCookieHandling(true);                       // store and send cookie-data like a browser does
 
-        $crawler->setTrafficLimit(1000 * 1024);                     // limiting traffic (for dev)
+        // $crawler->setTrafficLimit(1000 * 1024);                     // limiting traffic (for dev)
 
         $crawler->go();                                             // all info in, good to go
 
@@ -104,11 +113,11 @@ class ScreenshotsController extends Controller
         //*/////////////////////////////////////////////////
 
         foreach ($uniqueLinks as $link) {
-            $this->takeScreenshots($link, $newDir, $stats, "OK");   // follow through to take screenshots
+            $this->takeScreenshots($link, $newDir, $stats, "OK", $auth);   // follow through to take screenshots
         }
 
         foreach ($uniqueDeadLinks as $link) {
-            $this->takeScreenshots($link, $newDir, $stats, "404");  // follow through to take screenshots
+            $this->takeScreenshots($link, $newDir, $stats, "404", $auth);  // follow through to take screenshots
         }
     }
 
@@ -134,7 +143,7 @@ class ScreenshotsController extends Controller
                 );
 
             // Download .zip file.
-            return Response::download(public_path() . '/uploads/' . $zipFileName, $zipFileName, $headers);
+            return;
         } else {
             echo 'failed';
         }
@@ -167,6 +176,16 @@ class ScreenshotsController extends Controller
 
         $userURL = $request->input("url");
 
+        $auth = [];
+        if ($request->input("auth") == "on"){
+            $auth["status"] = true;
+            $auth["username"] = $request->input("username");
+            $auth["password"] = $request->input("password");
+        } else {
+            $auth["status"] = false;
+        }
+
+
         //*/////////////////////////////////////////////////
         // create new folder based on user input
         //*/////////////////////////////////////////////////
@@ -183,7 +202,7 @@ class ScreenshotsController extends Controller
         // crawl site for all possible links
         //*/////////////////////////////////////////////////
 
-        $this->crawlSite($userURL, $newDir, $stats);
+        $this->crawlSite($userURL, $newDir, $stats, $auth);
 
         //*/////////////////////////////////////////////////
         // zip up site folder with assets
@@ -195,11 +214,18 @@ class ScreenshotsController extends Controller
         // return user back to homepage
         //*/////////////////////////////////////////////////
 
+        $ziplink = "/uploads/" . $uniqueFolder . ".zip";
+
         $data = [];
         $data["domain"] = $domain;
-        $data["ziplink"] = "/uploads/" . $uniqueFolder . ".zip";
+        $data["ziplink"] = $ziplink;
 
-        return view('pages.report')->with('data', $data);
+        if (File::exists($_SERVER['DOCUMENT_ROOT'].$ziplink)) {
+            return view('pages.report')->with('data', $data);
+        } else {
+            return redirect()->route('error');
+        }
+
 
     }
 }

@@ -684,6 +684,7 @@ class PHPCrawler
 
     // Add basic-authentications to request
     $authentication = $this->UserSendDataCache->getBasicAuthenticationForUrl($UrlDescriptor->url_rebuild);
+
     if ($authentication != null)
     {
       $this->PageRequest->setBasicAuthentication($authentication["username"], $authentication["password"]);

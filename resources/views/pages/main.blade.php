@@ -36,8 +36,19 @@
         </fieldset>
 
         <fieldset class="custom-dimensions">
-            <label for="width">Viewport width in pixels (height determined by content) :</label>
+            <label for="width">Viewport width in pixels (height determined by content):</label>
             <input type="text" name="width" placeholder="1200">
+        </fieldset>
+
+        <fieldset class="auth">
+            <label for="auth">Does this site require server authentication?</label>
+            <input type="checkbox" name="auth">
+
+            <label for="username">Username:</label>
+            <input type="text" name="username" placeholder="username">
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" placeholder="password">
         </fieldset>
 
         <input type="submit" value="Submit">
