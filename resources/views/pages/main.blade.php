@@ -26,29 +26,31 @@
             <label><input type="radio" name="delay" value="15" required>15 seconds</label>
         </fieldset>
 
-        <fieldset class="dimensions">
-            <p>Which size device would you like to emulate these screenshots on (in pixels)?</p>
+        <div class="all-dimensions">
+            <fieldset class="dimensions">
+                <p>Which size device would you like to capture these screenshots with (in pixels)?</p>
 
-            <label><input type="radio" name="device" value="mobile" required> Mobile (414x624)</label>
-            <label><input type="radio" name="device" value="tablet" required> Tablet (768x1024)</label>
-            <label><input type="radio" name="device" value="desktop" required> Desktop (1280x1024)</label>
-            <label><input type="radio" name="device" value="custom" id="custom-dimensions" required> Custom</label>
-        </fieldset>
+                <label><input type="radio" name="device" value="mobile" required> Mobile (414x624)</label>
+                <label><input type="radio" name="device" value="tablet" required> Tablet (768x1024)</label>
+                <label><input type="radio" name="device" value="desktop" required> Desktop (1280x1024)</label>
+                <label><input type="radio" name="device" value="custom" id="custom-dimensions" required> Custom</label>
+            </fieldset>
 
-        <fieldset class="custom-dimensions">
-            <label for="width">Viewport width in pixels (height determined by content):</label>
-            <input type="text" name="width" placeholder="1200">
+            <fieldset class="custom-dimensions">
+                <label for="width">Viewport width in pixels (height determined by content):</label>
+                <input type="text" name="width" placeholder="1200">
+            </fieldset>
+        </div>
+
+        <fieldset class="auth-check">
+            <label for="auth">Does this site require server authentication?</label>
+            <label><input type="radio" name="auth" value="yes" id="auth" class="auth-field"> Yes </label>
+            <label><input type="radio" name="auth" value="no" class="auth-field"> No </label>
         </fieldset>
 
         <fieldset class="auth">
-            <label for="auth">Does this site require server authentication?</label>
-            <input type="checkbox" name="auth">
-
-            <label for="username">Username:</label>
-            <input type="text" name="username" placeholder="username">
-
-            <label for="password">Password:</label>
-            <input type="password" name="password" placeholder="password">
+            <label for="username" class="auth-field">Username:<input type="text" name="username" placeholder="username"></label>
+            <label for="password" class="auth-field">Password:<input type="password" name="password" placeholder="password"></label>
         </fieldset>
 
         <input type="submit" value="Submit">

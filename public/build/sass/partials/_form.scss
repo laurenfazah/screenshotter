@@ -13,7 +13,7 @@ form[name="url-input"]{
             }
         }
     }
-    input[type="url"], input[type="submit"], input[type="text"]{
+    input[type="url"], input[type="submit"], input[type="text"], input[type="password"]{
         width: 70%;
         border: none;
         &.submitting{
@@ -31,8 +31,20 @@ form[name="url-input"]{
             max-width: 300px;
         }
     }
-    fieldset.custom-dimensions{
+    fieldset.custom-dimensions, fieldset.auth{
         display: none;
+    }
+    fieldset.auth{
+        input{
+            margin-top: 15px;
+        }
+    }
+    fieldset.auth-check{
+        .auth-field{
+            text-align: center;
+            width: 50% !important;
+            float: left !important;
+        }
     }
     label, p{
         color: $dark;
@@ -69,7 +81,27 @@ form[name="url-input"]{
     }
 }
 
+@media all and(min-width: 800px){
+    form[name="url-input"]{
+        @include clearfix;
+        .delay, .all-dimensions, .auth-check{
+            margin-top: 50px;
+        }
+        .delay, .all-dimensions{
+            width: 50%;
+            float: left;
+        }
+        .auth-check{
+            clear: both;
+        }
+    }
+}
+
+
+
 @include keyframes(progress) {
     0%   { background-position: 0 0; }
     100% { background-position: 28px 0; }
 }
+
+

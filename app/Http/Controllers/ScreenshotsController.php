@@ -177,7 +177,7 @@ class ScreenshotsController extends Controller
         $userURL = $request->input("url");
 
         $auth = [];
-        if ($request->input("auth") == "on"){
+        if ($request->input("auth") == "yes"){
             $auth["status"] = true;
             $auth["username"] = $request->input("username");
             $auth["password"] = $request->input("password");

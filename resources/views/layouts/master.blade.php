@@ -7,6 +7,8 @@
 
         <title>Screenshotter</title>
 
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+
         <link rel="stylesheet" href="stylesheets/style.css">
 
     </head>

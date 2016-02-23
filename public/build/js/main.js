@@ -27,6 +27,12 @@ $(function(){
         $('label').css('color', baseColor);
         $('label:has(input[type="radio"]:checked)').css('color', primaryColor);
 
+        if ($('#auth').is(":checked")) {
+            $('fieldset.auth').slideDown().show();
+        } else {
+            $('fieldset.auth').slideUp();
+        }
+
     });
 
     //*/////////////////////////////////////////////////
