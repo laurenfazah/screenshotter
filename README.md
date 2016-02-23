@@ -23,6 +23,7 @@ Screenshotter is currently able to:
 * screenshot each page at custom dimensions
 * create a zipfile containing all screenshots available for download
 * pages returning a 404 are screenshot with "404" appended to their filename
+* sites requiring basic auth with server credentials will now work
 
 **Screenshotter will only work on desktop**
 
