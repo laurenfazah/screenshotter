@@ -4,6 +4,10 @@ form[name="url-input"]{
     label, input, div.message, p{
         @extend %form-base;
     }
+    label, p{
+        color: $dark;
+        font-weight: 700;
+    }
     label, input{
         @extend %default-transition;
         &[type="submit"]{
@@ -25,33 +29,41 @@ form[name="url-input"]{
         input[type="radio"]{
             vertical-align: middle;
             float: left;
+            width: 40px;
         }
         label{
             @include pad(10px default);
-            max-width: 300px;
+            max-width: 250px;
+            text-align: left;
+            margin: 0 auto;
         }
     }
-    fieldset.custom-dimensions, fieldset.auth{
+    fieldset.custom-dimensions{
         display: none;
+        input[type="text"]{
+            text-align: center;
+            max-width: 250px
+        }
     }
     fieldset.auth{
+        display: none;
         input{
             margin-top: 15px;
+            text-align: center;
         }
     }
     fieldset.auth-check{
+        max-width: 200px;
+        text-align: center;
+        margin:0 auto;
         .auth-field{
             text-align: center;
-            width: 50% !important;
-            float: left !important;
+            width: 100px;
+            float: left;
+            input{
+                margin-bottom: 12px;
+            }
         }
-    }
-    label, p{
-        color: $dark;
-        font-weight: 700;
-    }
-    input[type="radio"]:checked + label{
-        color: $primary;
     }
     div.message{
         display: none;

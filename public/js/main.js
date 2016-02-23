@@ -1,6 +1,6 @@
 $(function(){
 
-    var primaryColor = "#ff6d6d",
+    var primaryColor = "#fff",
         baseColor = "#333";
 
     //*/////////////////////////////////////////////////

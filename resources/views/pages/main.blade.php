@@ -44,13 +44,13 @@
 
         <fieldset class="auth-check">
             <label for="auth">Does this site require server authentication?</label>
-            <label><input type="radio" name="auth" value="yes" id="auth" class="auth-field"> Yes </label>
-            <label><input type="radio" name="auth" value="no" class="auth-field"> No </label>
+            <label class="auth-field"><input type="radio" name="auth" value="yes" id="auth"> Yes </label>
+            <label class="auth-field"><input type="radio" name="auth" value="no"> No </label>
         </fieldset>
 
         <fieldset class="auth">
-            <label for="username" class="auth-field">Username:<input type="text" name="username" placeholder="username"></label>
-            <label for="password" class="auth-field">Password:<input type="password" name="password" placeholder="password"></label>
+            <label for="username" class="auth-field">Server username:<input type="text" name="username" placeholder="username"></label>
+            <label for="password" class="auth-field">Server password:<input type="password" name="password" placeholder="password"></label>
         </fieldset>
 
         <input type="submit" value="Submit">
