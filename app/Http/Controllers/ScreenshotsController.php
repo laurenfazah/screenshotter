@@ -174,8 +174,8 @@ class ScreenshotsController extends Controller
         $uploadPath = base_path() . '/public/uploads/';         // path to uploads folder on server
         $parsedUrl = parse_url($userURL);                       // parsing user input
         $domain = $parsedUrl["host"];                           // grabbing just domain from user input
-        $uniqueFolder = $domain . '_' . time();                 // new unique folder name
-        $newDir = $uploadPath . $uniqueFolder . '/';
+        $uniqueFolder = $domain . '_' . time();
+        $newDir = $uploadPath . $domain . '_' . time() . '/';   // new unique folder name
 
         File::makeDirectory($newDir, 0777);                     // make new directory for screenshots
 

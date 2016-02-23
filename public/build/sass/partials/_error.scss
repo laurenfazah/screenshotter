@@ -1,0 +1,19 @@
+.error-message{
+    @include size(100%);
+    .container{
+        @extend %absolute-middle;
+        text-align: center;
+        h1{
+            font-size: 35px;
+            font-family: $font-slant;
+            font-style: italic;
+            margin-bottom: 40px;
+        }
+        a{
+            color: $light;
+            p{
+               line-height: 28px;
+            }
+        }
+    }
+}

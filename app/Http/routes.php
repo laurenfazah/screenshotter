@@ -21,6 +21,10 @@ if ($agent->isDesktop()) {
         return view('pages/main');
     });
 
+    Route::get('/error', function () {
+        return view('pages/error');
+    });
+
     Route::post('grabShots', 'ScreenshotsController@grabShots');
 
 } else {
