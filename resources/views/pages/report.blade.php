@@ -12,6 +12,19 @@
         </a>
 
 
+        @if ($data["exceptions"] !== [])
+            <div class="exceptions">
+                <h4>We had trouble rendering these links found:</h4>
+                <ul>
+                @foreach ($data["exceptions"] as $exception)
+                    <li>
+                        <p>{{ $exception }}</p>
+                    </li>
+                @endforeach
+                </ul>
+            </div>
+        @endif
+
     </div>
 
     <div class="return">

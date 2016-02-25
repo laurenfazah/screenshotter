@@ -22,6 +22,7 @@ use DOMDocument;
 
 class ScreenshotsController extends Controller
 {
+    public $exceptionLinks = [];
 
     public function takeScreenshots($site, $newDir, $stats, $siteStatus, $auth)
     {
@@ -47,24 +48,29 @@ class ScreenshotsController extends Controller
         $top    = 0;
         $left   = 0;
 
-        /**
-         * @see JonnyW\PhantomJs\Message\CaptureRequest
-         **/
-        $request = $client->getMessageFactory()->createCaptureRequest($site, 'GET');
-        if ($auth["status"] == true){
-            $request->addHeader('Authorization', 'Basic '. base64_encode($auth["username"].":".$auth["password"]));
+        try {
+            /**
+             * @see JonnyW\PhantomJs\Message\CaptureRequest
+             **/
+            $request = $client->getMessageFactory()->createCaptureRequest($site, 'GET');
+            if ($auth["status"] == true){
+                $request->addHeader('Authorization', 'Basic '. base64_encode($auth["username"].":".$auth["password"]));
+            }
+            $request->setDelay($delay);
+            $request->setOutputFile($filepath);
+            $request->setViewportSize($width, $height);
+
+            /**
+             * @see JonnyW\PhantomJs\Message\Response
+             **/
+            $response = $client->getMessageFactory()->createResponse();
+
+            // Send the request
+            $client->send($request, $response);
+        } catch (\Exception $e) {
+            // echo 'Caught exception: ',  $e->getMessage(), "\n";
+            $this->exceptionLinks[] = $e->getMessage(); // push error links to array
         }
-        $request->setDelay($delay);
-        $request->setOutputFile($filepath);
-        $request->setViewportSize($width, $height);
-
-        /**
-         * @see JonnyW\PhantomJs\Message\Response
-         **/
-        $response = $client->getMessageFactory()->createResponse();
-
-        // Send the request
-        $client->send($request, $response);
 
     }
 
@@ -219,6 +225,7 @@ class ScreenshotsController extends Controller
         $data = [];
         $data["domain"] = $domain;
         $data["ziplink"] = $ziplink;
+        $data["exceptions"] = $this->exceptionLinks;
 
         if (File::exists($_SERVER['DOCUMENT_ROOT'].$ziplink)) {
             return view('pages.report')->with('data', $data);

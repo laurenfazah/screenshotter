@@ -3,7 +3,8 @@
     height: 100vh;
     text-align: center;
     .download-link{
-        @extend %absolute-middle;
+        margin: 100px auto;
+        max-width: 80%;
         display: block;
         text-decoration: none;
         border: 1px $light solid;
@@ -26,9 +27,28 @@
             }
         }
     }
+    .exceptions{
+        max-width: 80%;
+        margin: 0 auto;
+        h4{
+            color: $dark;
+            text-align: left;
+            font-size: 28px;
+        }
+        ul{
+            text-align: left;
+            li{
+                margin: 10px auto;
+                p{
+                    color: $dark;
+                }
+            }
+        }
+    }
     .return{
-        @include position(absolute, auto auto 10vh auto);
+        text-align: center;
         width: 100%;
+        margin: 100px auto;
         a {
             color: $light;
         }
