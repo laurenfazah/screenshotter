@@ -89,7 +89,7 @@ class ScreenshotsController extends Controller
             $crawler->addBasicAuthentication("#". $trimmedSite ."#", $auth["username"], $auth["password"]);
         }
 
-        $crawler->addURLFilterRule("#\.(jpg|jpeg|gif|png|js|svg|css|ico|pdf|mp3|mp4|webm)$# i");    // ignore & don't request pics
+        $crawler->addURLFilterRule("#\.(jpg|jpeg|gif|png|js|svg|css|ico|mp3|mp4|webm)$# i");    // ignore & don't request pics
 
         $crawler->enableCookieHandling(true);                       // store and send cookie-data like a browser does
 
